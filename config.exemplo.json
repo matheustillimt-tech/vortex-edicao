@@ -1,0 +1,5 @@
+{
+  "webcam": null,
+  "fundo_gravacao": "#0a0a0a",
+  "_ajuda": "Se a gravação é TELA + webcam num canto (ex.: OBS), troque webcam por {\"x\":1467,\"y\":324,\"w\":453,\"h\":726} (px em 1920x1080). Assim o zoom mantém a câmera sem zoom por cima. fundo_gravacao = cor que fica atrás da webcam."
+}

@@ -1,0 +1,40 @@
+/* motions ilustrados (ilustra.py) — paleta P&B do design system; cor só na logo/mídia real */
+.icv [pathLength]{stroke-dasharray:1;stroke-dashoffset:0}
+.chip2{display:flex;align-items:center;gap:calc(16px*var(--k,1));padding:calc(14px*var(--k,1)) calc(26px*var(--k,1)) calc(14px*var(--k,1)) calc(14px*var(--k,1));border-radius:calc(22px*var(--k,1))}
+.chip-ic{width:calc(58px*var(--k,1));height:calc(58px*var(--k,1));border-radius:calc(16px*var(--k,1));display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.chip-tit{font-size:calc(34px*var(--k,1));font-weight:700;color:#fff;letter-spacing:-.01em;white-space:nowrap;text-shadow:0 0 22px rgba(255,255,255,.25)}
+.chip-sub{font-size:calc(20px*var(--k,1));color:#a0a0a0;margin-top:2px;white-space:nowrap}
+.cardm{border-radius:22px;perspective:900px}
+.midia{border-radius:14px;overflow:hidden;background:#131313;border:1px solid rgba(255,255,255,.12)}
+.midia img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:50% 40%}
+.cardm-rot{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:24px;font-weight:600;color:#e6e6e6;padding-left:4px}
+.prompt{padding:24px 26px 18px;border-radius:24px}
+.prompt-txt{font-size:32px;line-height:1.35;color:#fff;min-height:90px;font-weight:500}
+.caret{display:inline-block;width:3px;height:1.05em;background:#fff;vertical-align:-0.15em;margin-left:2px;box-shadow:0 0 10px rgba(255,255,255,.7)}
+.prompt-pe{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.prompt-mod{display:flex;align-items:center;gap:10px;font-size:22px;color:#a0a0a0}
+.prompt-btn{width:48px;height:48px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(255,255,255,.35)}
+.janela{padding:0 10px 10px;border-radius:20px;overflow:hidden}
+.jan-barra{height:44px;display:flex;align-items:center;gap:8px;padding:0 8px}
+.jan-barra i{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.28)}
+.jan-barra span{margin-left:14px;font-size:18px;color:#a0a0a0;background:rgba(255,255,255,.06);padding:5px 16px;border-radius:10px;flex:1}
+.jan-corpo{position:relative;overflow:hidden;border-radius:12px;background:#fff}
+.jan-cena{position:absolute;left:0;top:0}
+.jan-img{position:absolute;left:0;top:0;display:block}
+.jan-cursor{position:absolute;left:0;top:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+.jan-cursor .cur path{fill:#0a0a0a;stroke:#fff}
+.jan-anel{position:absolute;left:0;top:0;width:60px;height:60px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.35),0 0 18px rgba(255,255,255,.6);opacity:0}
+.fundo-cena{position:absolute;inset:0;z-index:3;overflow:hidden;background:#0a0a0a}
+.parede{display:flex;flex-wrap:wrap;perspective:1200px}
+.pw{border-radius:14px;object-fit:cover;box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12)}
+.obj{position:relative;perspective:1200px}
+.obj img{display:block;filter:drop-shadow(0 40px 60px rgba(0,0,0,.7))}
+.obj-luz{position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);mix-blend-mode:screen;pointer-events:none}
+.obj-rot{position:absolute;left:0;bottom:-40px;font:600 18px/1 "Inter";letter-spacing:.2em;color:#a0a0a0}
+.hud{position:relative;pointer-events:none;font:600 16px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(255,255,255,.75);text-transform:uppercase}
+.hud b{position:absolute;width:34px;height:34px;border-color:rgba(255,255,255,.7);border-style:solid;border-width:0}
+.hud .c1{left:28px;top:28px;border-left-width:2px;border-top-width:2px}.hud .c2{right:28px;top:28px;border-right-width:2px;border-top-width:2px}
+.hud .c3{left:28px;bottom:28px;border-left-width:2px;border-bottom-width:2px}.hud .c4{right:28px;bottom:28px;border-right-width:2px;border-bottom-width:2px}
+.h-esq{position:absolute;left:78px;top:44px}.h-dir{position:absolute;right:78px;top:44px}.h-sec{position:absolute;right:78px;bottom:44px}
+.h-barra{position:absolute;left:50%;bottom:48px;width:30%;margin-left:-15%;height:3px;background:rgba(255,255,255,.18)}
+.h-barra i{display:block;height:100%;background:#fff;transform-origin:left;box-shadow:0 0 12px rgba(255,255,255,.8)}
