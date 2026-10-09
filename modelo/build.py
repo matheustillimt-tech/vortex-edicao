@@ -13,7 +13,11 @@ Ferramentas principais
   circulo(de, ate, t_risca, cx, cy, w, h) → círculo limpo em volta de um número/botão da tela
   cena(de, ate)                 → fundo de tela cheia (vidro escuro) com a câmera em janelinha
   il.chip / il.card_midia / il.prompt / il.demo / il.parede / il.objeto / il.hud → motions ILUSTRADOS (ilustra.py)
-  sfx(nome, t, vol)             → efeito do kit (sons/): whoosh, whoosh_curto, clique, clique2, swish, impacto_grave...
+  sfx(nome, t, vol)             → efeito do kit (sons/): whoosh, whoosh_curto, clique, clique2, swish, impacto_grave, check...
+  cn = carrega_cenas()          → KIT OPCIONAL de cenas e demonstrações (cenas.py): cn.cena, cn.agua, cn.term, cn.cel,
+                                  cn.bolhas, cn.notif, cn.bate, cn.letreiro, cn.lower_third... Princípios: guia/MOTIONS.md
+No fim, o build roda o checa_texto.py (trava contra motion que transcreve a fala) e, se houver webcam
+na gravação, a camada webcam_fixa.py (zoom de câmera dentro da tela não amplia a webcam).
 Coordenadas em px de 1920×1080. Pra achar um ponto da tela:
   ffmpeg -ss T -i media/base.mp4 -frames:v 1 -vf "drawgrid=w=100:h=100:c=red@0.5" grade.png
 """
@@ -195,6 +199,15 @@ def circulo(de, ate, t_risca, cx, cy, w, h, cor="#ffffff"):
     sai(i, ate, 0.3)
     sfx("swish", t_risca - 0.05, 0.55)
 
+# ---------- kit opcional de cenas e demonstrações (cenas.py + cenas.css) ----------
+MISS, BATES = [], []   # avisos do build · tempos dos bate() (a camada webcam_fixa confere)
+def carrega_cenas():
+    """Liga o kit de cenas. Uso na LINHA DO TEMPO:  cn = carrega_cenas();  i = cn.cena(de, ate, "Título <em>curto</em>", plano)"""
+    from types import SimpleNamespace
+    g = dict(globals())
+    exec(compile((AQUI / "cenas.py").read_text(), str(AQUI / "cenas.py"), "exec"), g)
+    return SimpleNamespace(**{k: v for k, v in g.items() if not k.startswith("__")})
+
 CENAS = []
 def cena(de, ate):
     """Cena em tela cheia (fundo escuro com brilho). A câmera continua visível em janelinha."""
@@ -230,6 +243,17 @@ zoom(t0 + 11, min(DUR - 0.5, t0 + 15), 760, 460, 1.25, lento=True)
 if (AQUI / "midia/print.png").exists():
     il.card_midia(c, t0 + 15.5, t0 + 19, 60, 160, 620, "midia/print.png", "Print", icone_nome="print")
 
+# ---- KIT DE CENAS (opcional). Leia guia/MOTIONS.md antes: o objeto prova a ideia, o texto não copia a fala.
+# cn = carrega_cenas()
+# t = W("as vendas cresceram")                      # fim do raciocínio → cena branca de 5 a 7 s
+# i = cn.cena(t, t + 6, "Receita <em>mensal</em>", passos=2)
+# cn.no_plano(i, cn.agua(i, [(0, .1), (.4, .3), (.7, .55), (1, .9)], t + .5, 2.5, x=cn.X(0) - 700, y=300) +
+#              cn.selo("ok", cn.X(0) + 640, 260))
+# cn.check(i, ".ok", t + 3.2)
+# cn.corre(i, t + 3.8, 1)                             # a câmera corre pro próximo objeto (passo 1, em cn.X(1))
+# cn.bate(W("palavra forte"))                         # zoom seco no rosto ("rosto": [x, y] no config.json)
+# cn.checa_ritmo()                                    # ≥ 8 s de rosto entre cenas
+
 # ---- PiP da câmera (sem zoom) durante zooms e cenas
 for de, ate, k in sorted([(a, b, "c") for a, b in ZOOMS] + [(a, b, "c") for a, b in CENAS]):
     i = nid("pip")
@@ -239,6 +263,10 @@ for de, ate in sorted(CENAS + ZOOMS):
     JS.append(f'tl.fromTo("#{i}",{{opacity:0}},{{opacity:1,duration:.4}},{r3(de)});')
     sai(i, ate, 0.3)
 
+# ---- webcam fixa: zoom de câmera (bate, zoom pip=False) dentro da tela não amplia a webcam gravada nela
+if WEBCAM and (AQUI / "webcam_fixa.py").exists():
+    exec(compile((AQUI / "webcam_fixa.py").read_text(), str(AQUI / "webcam_fixa.py"), "exec"))
+
 # =====================================================================================
 if WEBCAM:
     _x, _y, _w, _h = WEBCAM["x"], WEBCAM["y"], WEBCAM["w"], WEBCAM["h"]
@@ -247,7 +275,13 @@ if WEBCAM:
                   f".tampa{{position:absolute;left:{_x}px;top:{_y}px;width:{_w}px;height:{_h}px;background:{FUNDO_GRAVACAO};z-index:1}}")
 else:
     CSS_WEBCAM = ""
-CSS = (AQUI / "estilo.css").read_text() + (AQUI / "ilustra.css").read_text() + CSS_WEBCAM
+CSS = ((AQUI / "estilo.css").read_text() + (AQUI / "ilustra.css").read_text()
+       + ((AQUI / "cenas.css").read_text() if (AQUI / "cenas.css").exists() else "") + CSS_WEBCAM)
+# ---- o SEU design system: config.json → "marca": {"destaque": "#1d7cf2", "fonte": "Inter"} (ou edite estilo.css/cenas.css)
+_MARCA = CFG.get("marca") or {}
+if _MARCA.get("destaque"): CSS += f":root{{--destaque:{_MARCA['destaque']}}}"
+if _MARCA.get("fonte"): CSS += f'#root{{font-family:"{_MARCA["fonte"]}","Inter",sans-serif}}'   # fonte instalada no sistema ou com @font-face no estilo.css
+
 FONTES = "".join(f'@font-face{{font-family:"Inter";src:url("fonts/inter-{w}.woff2") format("woff2");font-weight:{w};font-style:normal}}' for w in (400, 500, 600, 700, 800))
 html = f'''<!doctype html>
 <html lang="pt-BR" data-resolution="landscape">
@@ -283,3 +317,10 @@ TRILHA = '<audio id="trilha" src="sons/trilha.wav" data-start="0" data-duration=
 VOZ = '<audio id="voz" src="media/voz.wav" data-start="0" data-duration="%s" data-track-index="10" data-volume="1"></audio>' % DUR
 json.dump({"dur": DUR, "fps": FPS, "estilo": FONTES + CSS, "palco": PALCO, "html": HTML, "js": JS,
            "audio": [TRILHA, VOZ] + AUD, "zooms_camera": CAMZ}, open(AQUI / "partes.json", "w"), ensure_ascii=False)
+
+# ---- avisos e trava de texto (checa_texto.py): motion que copia a fala ou palavra vazia não passa
+for m in MISS: print("  ⚠", m)
+if (AQUI / "checa_texto.py").exists():
+    import subprocess as _sp2, sys as _sys2
+    if _sp2.run([_sys2.executable, str(AQUI / "checa_texto.py"), str(AQUI / "index.html")]).returncode:
+        _sys2.exit("build: o index.html foi gerado, mas tem texto que transcreve a fala. Corrija (ou marque a fala citada com class=\"fala-ok\").")

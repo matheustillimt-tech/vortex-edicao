@@ -1,0 +1,89 @@
+/* KIT DE CENAS E DEMONSTRAÇÕES (cenas.py) · cena branca, objetos de demonstração, lettering e lower third */
+@font-face{font-family:"Apple Color Emoji";src:local("Apple Color Emoji")}
+@font-face{font-family:"Segoe UI Emoji";src:local("Segoe UI Emoji")}
+@font-face{font-family:"Noto Color Emoji";src:local("Noto Color Emoji")}
+.cn-emo{display:inline-block;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:drop-shadow(0 14px 18px rgba(0,0,0,.16))}
+.cn-i3{display:inline-block;object-fit:contain;mix-blend-mode:multiply;vertical-align:middle;flex-shrink:0}
+
+/* cena branca: fundo radial com vinheta cinza, por cima de tudo */
+.cn-cena{position:absolute;inset:0;z-index:11}
+.cn-cena>.in{position:absolute;inset:0;overflow:hidden;color:#111;perspective:1800px;
+  background:radial-gradient(ellipse 75% 70% at 50% 46%,#ffffff 0%,#f4f4f6 45%,#dcdce0 100%)}
+.cn-plano{position:absolute;left:0;top:0;height:1080px}
+.cn-tit{position:absolute;left:0;right:0;top:64px;text-align:center;font-size:46px;font-weight:650;letter-spacing:-.02em;z-index:5}
+.cn-w{display:inline-block;color:#c4c4c9}
+.cn-selo{position:absolute;border-radius:50%;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;opacity:0;z-index:6}
+.cn-card{position:absolute;background:#fff;border-radius:30px;box-shadow:0 18px 50px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06)}
+.cn-lb{font-size:44px;font-weight:800;color:#0b0b0b;letter-spacing:-.02em;text-align:center;line-height:1.05}
+.cn-nb{font-size:150px;font-weight:800;letter-spacing:-.04em;color:#0b0b0b;line-height:1;font-variant-numeric:tabular-nums}
+.cn-nb.az{color:var(--destaque,#1d7cf2)}.cn-nb.vd{color:#16a34a}.cn-nb.vm{color:#ef4444}
+
+/* chip riscável */
+.cn-chip{position:relative;display:inline-flex;align-items:center;gap:16px;background:#fff;border-radius:999px;padding:16px 30px;font-size:40px;font-weight:700;color:#0b0b0b;box-shadow:0 14px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06)}
+.cn-rk{position:absolute;left:-4%;right:-4%;top:50%;height:9px;margin-top:-4px;border-radius:5px;background:#ef4444;transform-origin:left;transform:scaleX(0)}
+
+/* barras e grade de pontos */
+.cn-barras{position:absolute;display:flex;align-items:flex-end;justify-content:space-around;gap:30px}
+.cn-bc{display:flex;flex-direction:column;align-items:center;gap:14px;font-size:30px;font-weight:700;color:#55555a}
+.cn-bt{display:flex;align-items:flex-end}
+.cn-bi{display:block;border-radius:20px 20px 8px 8px;transform-origin:bottom}
+.cn-grade{position:absolute;display:flex;flex-wrap:wrap;gap:8px}
+.cn-grade i{display:block;border-radius:50%;background:#d9d9de}
+
+/* celular + conversa */
+.cn-cel{position:absolute;border-radius:64px;background:#111;padding:16px;box-shadow:0 40px 90px rgba(0,0,0,.28),inset 0 0 0 3px #333}
+.cn-cels{position:relative;width:100%;height:100%;border-radius:52px;overflow:hidden;background:#efeae2}
+.cn-ilha{position:absolute;left:50%;top:16px;width:150px;height:40px;margin-left:-75px;border-radius:22px;background:#000;z-index:5}
+.cn-celc{position:absolute;left:0;right:0;top:150px;bottom:0;padding:18px 22px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.cn-wtop{position:absolute;left:0;right:0;top:0;height:130px;background:#f6f6f6;border-bottom:1px solid #ddd;display:flex;align-items:flex-end;gap:16px;padding:0 24px 16px;z-index:4}
+.cn-wav{width:64px;height:64px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff}
+.cn-wav img{width:100%;height:100%;object-fit:cover}
+.cn-wn{font-size:30px;font-weight:700;color:#111}.cn-ws{font-size:22px;color:#7a7a80}
+.cn-bb{max-width:78%;padding:16px 22px 26px;border-radius:26px;font-size:28px;line-height:1.25;font-weight:500;color:#111;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.cn-bb.eu{align-self:flex-end;background:#d9fdd3;border-top-right-radius:6px}
+.cn-bb.ele{align-self:flex-start;background:#fff;border-top-left-radius:6px}
+.cn-bb i{position:absolute;right:14px;bottom:6px;font-size:18px;color:#53bdeb;font-style:normal}
+.cn-notif{position:absolute;left:18px;right:18px;top:70px;z-index:6;display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:30px;background:rgba(245,245,247,.94);box-shadow:0 14px 40px rgba(0,0,0,.25);opacity:0}
+.cn-notif .cn-nti{flex-shrink:0}
+.cn-notif b{display:block;font-size:26px;color:#111}.cn-notif span{display:block;font-size:24px;color:#333;line-height:1.2}
+.cn-notif em{position:absolute;right:22px;top:16px;font-size:20px;color:#888;font-style:normal}
+
+/* terminal */
+.cn-term{position:absolute;border-radius:28px;background:#1b1b1d;box-shadow:0 30px 80px rgba(0,0,0,.3);overflow:hidden}
+.cn-term .cn-jb{height:62px;display:flex;align-items:center;gap:10px;padding-left:22px;background:#2a2a2d}
+.cn-term .cn-jb i{width:16px;height:16px;border-radius:50%;background:#ff5f57}.cn-term .cn-jb i:nth-child(2){background:#febc2e}.cn-term .cn-jb i:nth-child(3){background:#28c840}
+.cn-term .cn-jb span{margin:0 auto;display:flex;align-items:center;gap:12px;color:#ddd;font-size:26px;font-weight:600;transform:translateX(-30px)}
+.cn-tc{padding:34px 36px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:32px;line-height:1.5;color:#eaeaea}
+.cn-tp{white-space:normal;word-break:break-word}.cn-tp b{color:#d97757}
+.cn-cur{display:inline-block;width:16px;height:36px;background:#eaeaea;vertical-align:middle;margin-left:4px;text-decoration:none}
+.cn-ts{margin-top:18px;color:#bdbdbd;font-size:30px}.cn-ts b{color:#28c840}
+
+/* número ao lado do rosto */
+.cn-ld{width:max-content;background:rgba(255,255,255,.97);border-radius:34px;padding:26px 34px;box-shadow:0 30px 80px rgba(0,0,0,.45);color:#0b0b0b;font-weight:800}
+.cn-nl{display:flex;align-items:center;gap:22px}
+.cn-nlv{font-size:84px;white-space:nowrap;font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.cn-nls{font-size:30px;font-weight:700;color:#7a7a80;margin-top:6px}
+
+/* lettering (lado livre do rosto) */
+.cn-lt{position:relative;transform-origin:0% 50%;isolation:isolate}
+.cn-lv{position:absolute;left:-140px;top:-120px;width:calc(100% + 280px);height:calc(100% + 240px);background:radial-gradient(closest-side,rgba(0,0,0,.50),rgba(0,0,0,.28) 55%,rgba(0,0,0,0));opacity:0;z-index:-1}
+.cn-lw{display:inline-block;opacity:0;margin-right:.24em;text-shadow:0 0 30px rgba(255,255,255,.30),0 6px 30px rgba(0,0,0,.60),0 2px 5px rgba(0,0,0,.45)}
+.cn-lk{font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.92);margin-bottom:10px;white-space:nowrap}
+.cn-lg{font-weight:800;letter-spacing:-.045em;line-height:.95;color:#fff;white-space:nowrap}
+.cn-lm{font-weight:700;letter-spacing:-.02em;line-height:1.05;color:rgba(255,255,255,.95);margin-top:6px;white-space:nowrap}
+.cn-lu{height:7px;width:46%;margin-top:18px;border-radius:4px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));box-shadow:0 0 18px rgba(255,255,255,.55);transform-origin:0 50%}
+
+/* lower third */
+.cn-nm{position:relative;width:590px;padding:28px 34px 30px;border-radius:26px;overflow:hidden;background:linear-gradient(150deg,rgba(30,30,32,.82),rgba(6,6,8,.90));
+  border:1.5px solid rgba(255,255,255,.22);box-shadow:0 26px 70px rgba(0,0,0,.50),inset 0 1px 0 rgba(255,255,255,.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.cn-ng{position:absolute;top:-30%;left:0;width:120px;height:160%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.20),rgba(255,255,255,0))}
+.cn-nmask{overflow:hidden;padding:10px 30px 12px;margin:-10px -30px -12px}
+.cn-nn{font-size:74px;font-weight:800;letter-spacing:-.04em;line-height:1.02;color:#fff;text-shadow:0 0 18px rgba(255,255,255,.30);white-space:nowrap}
+.cn-nlin{height:2px;margin:18px 0 20px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.06));box-shadow:0 0 12px rgba(255,255,255,.6);transform-origin:0 50%}
+.cn-nc{display:flex;align-items:center;gap:16px;font-size:30px;font-weight:600;color:rgba(255,255,255,.66);white-space:nowrap;opacity:0;margin-top:14px}
+.cn-nc:first-of-type{margin-top:0}
+.cn-nc b{color:#fff;font-weight:800}.cn-dot{opacity:.45;padding:0 4px}
+.cn-nlg{display:inline-flex}
+
+/* b-roll */
+.cn-broll{position:absolute;z-index:12;object-fit:cover;overflow:hidden;transform-origin:50% 50%}

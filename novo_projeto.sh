@@ -3,7 +3,7 @@
 set -euo pipefail
 R="$(cd "$(dirname "$0")" && pwd)"; N="$1"; P="${VORTEX_PROJETOS:-$HOME/vortex-edicao-projetos}/$N"
 mkdir -p "$P/midia" "$P/renders"
-cp "$R"/modelo/{build.py,estilo.css,ilustra.py,ilustra.css,render_rapido.py,masterizar.sh} "$P/"
+cp "$R"/modelo/{build.py,estilo.css,ilustra.py,ilustra.css,render_rapido.py,masterizar.sh,cenas.py,cenas.css,checa_texto.py,webcam_fixa.py} "$P/"
 [ -f "$P/config.json" ] || cp "$R/config.exemplo.json" "$P/config.json"
 cp -R "$R/fonts" "$R/logos" "$P/"
 mkdir -p "$P/sons"; cp "$R"/sons/kit/*.wav "$P/sons/"          # cópia (o HyperFrames não serve link simbólico de mídia)

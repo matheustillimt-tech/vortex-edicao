@@ -4,9 +4,9 @@
 Filosofia: efeitos discretos e secos, sem nada "infantil" (bloop, sininho, glide) e SEM tom agudo sustentado
 ("piii"). Todo arquivo passa no teste de tom no fim (≤ 50% da energia acima de 300 Hz num único pico).
 
-Uso:  python3 sons/gerar_sons.py [pasta_saida]        (padrão: sons/kit)
+Uso:  python3 sons/gerar_sons.py [pasta_saida] [--sem-trilha]        (padrão: sons/kit)
 Gera: whoosh, whoosh_curto, clique, clique2, swish, impacto_grave, contador_{1_5,2_5,3_5}s,
-      digitacao_{1_5,2_5}s e trilha.wav (pad grave + pulso, 100 bpm, 270 s, sem melodia).
+      digitacao_{1_5,2_5}s, check e trilha.wav (pad grave + pulso, 100 bpm, 270 s, sem melodia).
 """
 import sys
 from pathlib import Path
@@ -16,7 +16,8 @@ from scipy.signal import butter, sosfilt, lfilter
 
 SR = 48000
 rng = np.random.default_rng(7)
-OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent / "kit"
+_ARGS = [x for x in sys.argv[1:] if not x.startswith("--")]
+OUT = Path(_ARGS[0]) if _ARGS else Path(__file__).parent / "kit"
 OUT.mkdir(parents=True, exist_ok=True)
 
 def filt(x, tipo, f, ordem=4):
@@ -107,6 +108,16 @@ def trilha(dur=270.0):
     st *= f[:, None]; st = st / np.sqrt((st ** 2).mean()) * 10 ** (-20 / 20)
     return np.clip(st, -.98, .98)
 
+def check():
+    """Som de "deu certo": dois ticks secos subindo + corpo grave curto. Sem sininho, sem bipe longo."""
+    def tick(dur, f, amp):
+        n = int(SR * dur); return filt(rng.standard_normal(n), "band", [f / 1.45, f * 1.45], 2) * np.exp(-np.linspace(0, 7, n)) * amp
+    y = np.zeros(int(SR * 0.32)); o = int(SR * 0.075)
+    t1 = tick(0.035, 1300, 1.0); y[:len(t1)] += t1
+    t2 = tick(0.05, 2100, 1.1); y[o:o + len(t2)] += t2
+    nc = int(SR * 0.12); y[o:o + nc] += filt(rng.standard_normal(nc), "low", 220, 2) * np.exp(-np.linspace(0, 6, nc)) * 1.6
+    return fade(pico(y, -6))
+
 def tom(y):
     S = np.abs(np.fft.rfft(y * np.hanning(len(y)))); f = np.fft.rfftfreq(len(y), 1 / SR)
     m = f > 300; S, f = S[m], f[m]; i = S.argmax()
@@ -118,6 +129,7 @@ KIT = {
     "swish": swish(), "impacto_grave": impacto(),
     "contador_1_5s": contador(1.5), "contador_2_5s": contador(2.5), "contador_3_5s": contador(3.5),
     "digitacao_1_5s": digitacao(1.5), "digitacao_2_5s": digitacao(2.5),
+    "check": check(),
 }
 for nome, y in KIT.items():
     pc = tom(y)

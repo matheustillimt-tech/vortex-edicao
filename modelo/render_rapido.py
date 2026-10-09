@@ -38,12 +38,26 @@ def janelas(p, junta, margem):
         A, B = max(0, math.floor(a * fps)), min(tot, math.ceil(b * fps))
         if fr and A <= fr[-1][1]: fr[-1][1] = max(fr[-1][1], B)
         else: fr.append([A, B])
-    return fr, tot
+    # trecho com no máximo ~90 s: senão o HyperFrames enche o disco com os quadros extraídos da mídia
+    MAX = int(90 * fps); sep = []
+    for A, B in fr:
+        while B - A > MAX:
+            sep.append([A, A + MAX]); A += MAX
+        sep.append([A, B])
+    return sep, tot
 
 def desloca(h, a):
+    # Clip que começou ANTES do trecho ganhava data-start negativo, e o HyperFrames o mantinha visível pela
+    # duração inteira a partir do 0 (ex.: painel vazio aparecendo fora de hora). Corrige cortando o clip no
+    # início do trecho: data-start = 0, duração encurtada e data-media-start avançado no mesmo tanto.
+    corte = [0.0]
     def f(m):
-        return f'data-start="{round(float(m.group(1)) - a, 4)}" data-duration="{m.group(2)}"'
+        s, d = float(m.group(1)) - a, float(m.group(2))
+        if s < 0: corte[0], s, d = -s, 0.0, d + s
+        return f'data-start="{round(s, 4)}" data-duration="{round(d, 4)}"'
     h = RE_T.sub(f, h, count=1)
+    if corte[0]:
+        h = re.sub(r'data-media-start="([\d.]+)"', lambda m: f'data-media-start="{round(float(m.group(1)) + corte[0], 4)}"', h, count=1)
     # +1 ms no início da mídia: o arredondamento do corte (ex. 36,2333 s) fazia pegar o quadro anterior em alguns quadros
     return re.sub(r'data-media-start="([\d.]+)"', lambda m: f'data-media-start="{round(float(m.group(1)) + 0.001, 4)}"', h)
 
@@ -60,7 +74,15 @@ def html_trecho(p, A, B):
     fps = p["fps"]; a, b = A / fps, B / fps; dur = round((B - A) / fps, 4)
     palco = [desloca(h, a) for h in p["palco"] if dentro(h, a, b)]
     html = [desloca(h, a) for h in p["html"] if dentro(h, a, b)]
-    js = [l for l in p["js"] if any(a - 1e-3 <= t <= b + 1e-3 for t in posicoes(l))]
+    # entram as animações dentro do trecho E as que começaram antes dele (clip cortado no início ou trecho
+    # dividido em 90 s), mas só de elementos que existem no trecho (senão o querySelector volta null e quebra a página)
+    ids = set(re.findall(r'id="([^"]+)"', "".join(palco + html)))
+    def ok(l):
+        ref = re.findall(r'\("#([\w-]+)', l)   # alvo do tween/querySelector (cor "#fff" fica de fora)
+        if ref and not all(x in ids or x in ("palco", "base", "root") for x in ref): return False
+        ps = posicoes(l)
+        return any(a - 1e-3 <= t <= b + 1e-3 for t in ps) or (ref and any(t <= b + 1e-3 for t in ps))
+    js = [l for l in p["js"] if ok(l)]
     return f'''<!doctype html>
 <html lang="pt-BR" data-resolution="landscape">
 <head>
@@ -106,9 +128,18 @@ def renderiza_trechos(p, fr, workers):
         r = subprocess.run(["npx", "-y", "hyperframes", "render", "-c", tmp.name, "-o", str(out), "-w", str(workers), "--crf", "8", "--quiet"],
                            cwd=AQUI, env={**os.environ, "HYPERFRAMES_SKIP_SKILLS": "1"}, capture_output=True, text=True)
         tmp.unlink(missing_ok=True)
+        import glob as _g, shutil as _sh, tempfile as _tf   # cache de quadros extraídos: libera o disco a cada trecho
+        for d in _g.glob(os.path.join(_tf.gettempdir(), "hyperframes-extract-cache-*")):
+            _sh.rmtree(d, ignore_errors=True)
         if r.returncode != 0 or not out.exists():
             sys.exit(f"falhou no trecho {A}-{B}:\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
         n = int(subprocess.run(["ffprobe", "-v", "error", "-count_packets", "-select_streams", "v", "-show_entries", "stream=nb_read_packets", "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip())
+        if n == B - A + 1:
+            # duração em float (ex. 13,0667 s × 30 = 392,001): o HyperFrames arredonda pra cima → tira o quadro extra do fim
+            aparado = out.with_suffix(".tmp.mp4")
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(out), "-map", "0", "-frames:v", str(B - A), "-c", "copy", str(aparado)], check=True)
+            aparado.replace(out)
+            n = B - A
         if n != B - A:
             out.unlink(); sys.exit(f"trecho {A}-{B}: {n} quadros, esperado {B - A}")
         print(f"  trecho {k + 1}/{len(fr)} ({(B - A) / p['fps']:.1f} s) em {time.time() - t0:.0f} s", flush=True)

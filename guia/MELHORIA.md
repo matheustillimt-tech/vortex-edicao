@@ -18,5 +18,5 @@ A skill fica melhor a cada edição. Depois de entregar um vídeo:
    - `snapshot` dos quadros afetados;
    - render de um trecho;
    - comparação com a versão anterior.
-6. **Sincronize:** a cópia da skill no repositório ou vault da equipe, na mesma sessão.
+6. **Sincronize:** a cópia da skill no repositório da equipe, na mesma sessão.
 7. **Pergunte no próximo vídeo** se a regra nova funcionou. Regra que não funcionou volta pro passo 1.

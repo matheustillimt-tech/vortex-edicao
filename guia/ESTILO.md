@@ -2,6 +2,8 @@
 
 A edição tem que prender (dopaminérgica) sem parecer brinquedo (clean). O critério de todo efeito é uma pergunta: **"isso passa autoridade ou parece brinquedo?"**
 
+> **Leia antes o [`MOTIONS.md`](MOTIONS.md).** Os princípios de lá vencem as tabelas daqui: o motion não transcreve a fala, adjetivo vira prova e ao lado do rosto só entram logo, número e inscrição. A cena branca do kit (`cenas.py`) tem a paleta própria descrita lá (branco radial, preto e um azul de destaque).
+
 ## Visual
 
 - **Paleta:**
@@ -17,7 +19,7 @@ A edição tem que prender (dopaminérgica) sem parecer brinquedo (clean). O cri
 
 | Formato | Quanto motion |
 |---|---|
-| **YouTube: abertura (0–45 s)** | densa: um motion ilustrado a cada 2–4 s, punch-in no rosto, texto cinético palavra a palavra |
+| **YouTube: abertura (0–45 s)** | densa: um motion ilustrado a cada 2–4 s, zoom seco no rosto, 4 a 6 letterings com o núcleo das frases-chave (nunca a frase inteira) |
 | **YouTube: corpo** | um a cada 20–40 s, sempre ilustrado; zoom in/out onde a pessoa aponta ou explica |
 | **Reels / TikTok** | o mais denso: imagem ou ícone animado em quase tudo |
 | **Aula / tutorial longo** | leve: abertura, zoom em texto pequeno, número em destaque, card do entregável |
