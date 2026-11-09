@@ -20,6 +20,33 @@ Pasta desta skill = `$SKILL` (onde está este arquivo). Projetos ficam em `~/vor
 - **B-roll grátis do Pexels** (`scripts/broll_pexels.py`).
 - Sons e trilha sintetizados, master −14 LUFS, render rápido com cache.
 
+## O processo em 9 etapas
+
+| # | Etapa | O que acontece | Onde |
+|---|---|---|---|
+| 1 | **Referência** | um vídeo que estourou em canal pequeno (estrutura) + a edição que você gosta (estilo), analisados e adaptados ao seu design system | `guia/REFERENCIA.md`, `scripts/referencia.sh` |
+| 2 | **Memória** | toda correção vira regra; leia antes de planejar, escreva depois de cada feedback | `guia/APRENDIZADOS.md` |
+| 3 | **Gravação** | câmera e tela separadas, repetir a frase quando errar | `guia/GRAVACAO.md` |
+| 4 | **Transcrição** | palavra por palavra, com o tempo de cada uma | `novo_projeto.sh` |
+| 5 | **Cortes de erros** | erro, repetição e silêncio; fica a última tentativa | `cortar.py` |
+| 6 | **Planejamento de motions** | tabela: o quê, em qual palavra, quanto tempo, que estilo. **A pessoa aprova antes da edição** | `guia/MOTIONS.md` |
+| 7 | **Edição** | linha do tempo no `build.py`: motions, logos, telas, b-roll, zoom, círculo, trilha e efeitos | `build.py`, `guia/ESTILO.md` |
+| 8 | **Renderização** | só os trechos com motion, em paralelo; revisão conversando, e o ajuste volta pra etapa 2 | `render_rapido.py` |
+| 9 | **Organização e postagem** | entregar o arquivo, guardar o plano e o roteiro de saída junto do projeto pro próximo ajuste | — |
+
+**Acertou o plano da etapa 6, economiza token e revisão.** Mostre a tabela da linha do tempo (o que, quando, quanto tempo, estilo) e só escreva o `build.py` depois do OK. É aí também que a pessoa diz se quer mais ou menos motion.
+
+**Economia de token:** entre uma etapa e outra, a pessoa pode limpar o chat (`/clear`). Tudo que importa fica em arquivo (projeto, `REFERENCIA.md`, `APRENDIZADOS.md`), então a próxima conversa continua de onde parou.
+
+## Novidades (novembro/2026)
+
+- **Etapa de referência** (`guia/REFERENCIA.md` + `scripts/referencia.sh`): baixa o vídeo, calcula o score (views ÷ inscritos), transcreve pela legenda e monta folhas de quadros pra analisar estrutura e edição.
+- **Memória** (`guia/APRENDIZADOS.md`): lista de regras que a skill lê antes de planejar e atualiza a cada correção, já com as regras aprendidas em dezenas de vídeos.
+- **Motion no fim da fala:** entra quando a pessoa termina o raciocínio e monta em até 1,2 s.
+- **Círculo vermelho** por padrão em número da tela (`circulo()`).
+- **Cortes e voz:** emenda nunca come palavra, silêncio com ruído de teclado sai, voz com tratamento leve.
+- **iPhone HDR:** conversão pra SDR sem lavar a pele (`guia/GRAVACAO.md`).
+
 ## Novidades (outubro/2026)
 
 - `guia/MOTIONS.md`: princípios de motion. **Leia antes de planejar** (valem mais que a tabela do `ESTILO.md`).
@@ -39,6 +66,11 @@ bash $SKILL/instalar.sh          # confere Node 22+, ffmpeg, Python; instala o r
 Transcrição: ElevenLabs (melhor, `ELEVENLABS_API_KEY` no `$SKILL/.env`) ou Whisper local (`pip install openai-whisper`). B-roll: `PEXELS_API_KEY` (grátis em pexels.com/api) no mesmo `.env`. **Nunca** peça chave no chat: peça pra pessoa colar no `.env`.
 
 Se a pessoa ainda vai gravar, mostre o `$SKILL/guia/GRAVACAO.md` (câmera e tela em arquivos separados com o Source Record do OBS).
+
+## Antes de editar: referência e memória
+
+1. Se a pessoa tem uma referência (link do YouTube), rode a etapa 1 (`guia/REFERENCIA.md`) e mostre a tabela "na referência → no meu".
+2. **Leia o `guia/APRENDIZADOS.md` inteiro.** As regras de lá valem mais que as tabelas do `ESTILO.md`.
 
 ## 1. Transcrever e cortar
 
@@ -64,7 +96,7 @@ bash $SKILL/novo_projeto.sh <nome> <gravacao.mp4>        # cria o projeto e tran
 
 Abra `build.py` do projeto. Os helpers estão documentados no topo. Apague o EXEMPLO e escreva a LINHA DO TEMPO:
 - **Tudo ancorado na fala:** `t = W("frase exata", apos)`. Nunca use segundo "chutado".
-- Leia **`$SKILL/guia/MOTIONS.md`** e depois `$SKILL/guia/ESTILO.md`. O primeiro diz o que NÃO vira motion (e vence quando os dois discordam); o segundo tem densidade, o que vira qual motion, sons e armadilhas.
+- **Antes, a tabela do plano (etapa 6) aprovada pela pessoa.** Leia **`$SKILL/guia/APRENDIZADOS.md`**, **`$SKILL/guia/MOTIONS.md`** e depois `$SKILL/guia/ESTILO.md`. O primeiro diz o que NÃO vira motion (e vence quando os dois discordam); o segundo tem densidade, o que vira qual motion, sons e armadilhas.
 - **O motion não transcreve a fala.** Palavra vazia não vai pra tela; adjetivo vira prova (contador, `agua()`, chip riscado); texto de objeto é inventado e concreto (o prompt, a notificação), nunca o trecho falado. Fala citada de propósito vai com `class="fala-ok"`.
 - **Kit de cenas (opcional):** `cn = carrega_cenas()`. Cena branca no FIM do raciocínio (5 a 7 s, ≥ 8 s de rosto entre cenas), 3 a 5 passos de objeto com `cn.corre()` e `cn.check()` no fim; ao lado do rosto só logo, número (`cn.num_lado`) e inscrição; `cn.letreiro` só no gancho; `cn.lower_third` quando a pessoa diz o nome; `cn.bate()` na palavra forte (nunca em trecho de tela); `cn.checa_ritmo()` no fim.
 - **B-roll:** quando a fala pedir uma imagem genérica ("cidade", "dinheiro", "escritório"), busque no Pexels com o termo **em inglês** e use `cn.broll(de, ate, "midia/broll/<arquivo>.mp4")` (tela cheia) ou `card=True`:
@@ -124,7 +156,7 @@ A skill fica melhor a cada edição. Depois de entregar um vídeo:
    - defeito técnico (ex.: "câmera aparece duas vezes");
    - componente novo (ex.: "cursor clicando num print").
 3. **Registre** antes de esquecer:
-   - em `guia/MELHORIA.md` (histórico) ou no `guia/ESTILO.md` (regra) (o que pediu, a regra e o estado ✅/⏳);
+   - em `guia/APRENDIZADOS.md` (o que pediu, a regra e o estado ✅/⏳);
    - na memória, se for preferência da pessoa.
 4. **Corrija na fonte**, não só no vídeo:
    - regra vira código no modelo (`build.py`, `ilustra.py`, `gerar_sons.py`);

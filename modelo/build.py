@@ -10,7 +10,7 @@ Ferramentas principais
   conta + contador_som          → número contando enquanto é falado
   tile("claude"|"codex"|"instagram"|"youtube"|"tiktok"|"whatsapp") → logo real no formato de ícone
   zoom(de, ate, cx, cy, escala, lento=False) · zoom_seq(...) → zoom na gravação (a câmera volta por cima, sem zoom)
-  circulo(de, ate, t_risca, cx, cy, w, h) → círculo limpo em volta de um número/botão da tela
+  circulo(de, ate, t_risca, cx, cy, w, h) → círculo vermelho limpo em volta de um número/botão da tela (branco some na tela)
   cena(de, ate)                 → fundo de tela cheia (vidro escuro) com a câmera em janelinha
   il.chip / il.card_midia / il.prompt / il.demo / il.parede / il.objeto / il.hud → motions ILUSTRADOS (ilustra.py)
   sfx(nome, t, vol)             → efeito do kit (sons/): whoosh, whoosh_curto, clique, clique2, swish, impacto_grave, check...
@@ -180,7 +180,7 @@ PALCO = []
 def tampa(de, ate):
     """Cobre a webcam ORIGINAL dentro do palco durante o zoom — senão ela aumenta junto com a tela e aparece duas vezes."""
     PALCO.append(f'<div class="clip tampa" data-start="{r3(de)}" data-duration="{r3(ate - de)}" data-track-index="4"></div>')
-def circulo(de, ate, t_risca, cx, cy, w, h, cor="#ffffff"):
+def circulo(de, ate, t_risca, cx, cy, w, h, cor="#ef4444"):
     """Círculo limpo (geométrico, não rabisco) em volta de uma informação da TELA. Fica dentro do #palco,
     então acompanha o zoom. Desenha em 0,5 s a partir de t_risca e sai com fade no fim."""
     import math

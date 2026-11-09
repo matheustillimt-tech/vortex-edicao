@@ -75,3 +75,16 @@ Se os arquivos não começarem juntos, bata uma palma no início e alinhe com `-
 - **Abra no meio da frase de impacto**, sem "fala pessoal, tudo bem?". Nos primeiros 3 s, a prova (número, resultado).
 - **Dê gatilhos concretos:** números, nomes de ferramentas, listas faladas item a item, pedidos citados ("aí eu pedi: me manda um relatório todo dia às 19h"). Cada um vira um objeto na tela.
 - Errou? **Repita a frase inteira** depois de uma pausa. A edição fica com a última tentativa.
+- **Sem teleprompter também funciona:** deixe só a introdução escrita (o primeiro minuto) e grave o resto em cima de tópicos ou de um mapa mental. Soa mais natural.
+- Ligue o **Não Perturbe**: notificação não entra no vídeo.
+
+## Gravando com o iPhone
+
+A câmera do iPhone grava em **HDR** (HEVC 10 bits HLG). Sem conversão, a pele fica avermelhada e lavada no YouTube. Antes de transcrever, converta pra SDR e codifique com qualidade alta (nunca o codificador de hardware, que borra pele e cabelo):
+
+```bash
+ffmpeg -i bruto.MOV -vf "zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p" \
+  -c:v libx264 -crf 15 -preset medium -tune film -c:a aac -b:a 256k bruto_sdr.mp4
+```
+
+Confira um recorte do rosto (original × convertido) antes de seguir.

@@ -28,6 +28,18 @@ Estética **clean e dopaminérgica**: preto com branco brilhante, vidro, tudo en
 | **Webcam fixa** | na gravação com a webcam dentro da tela, o zoom não amplia a webcam: ela fica parada e inteira por cima |
 | **Seu design system** | os motions já vêm treinados com regras de ritmo e estética; cor de destaque e fonte no `config.json` (`marca`), o resto no CSS |
 
+## O processo em 9 etapas
+
+**Referência → Memória → Gravação → Transcrição → Cortes de erros → Planejamento de motions → Edição → Renderização → Organização e postagem.**
+
+Não existe prompt mágico: a skill segue cada etapa sempre do mesmo jeito, você aprova o plano antes da edição, e toda correção sua vira regra no [`guia/APRENDIZADOS.md`](guia/APRENDIZADOS.md). A cada vídeo ela erra menos. Detalhe de cada etapa no [`SKILL.md`](SKILL.md).
+
+## Novidades (novembro/2026)
+
+- **[Referência](guia/REFERENCIA.md):** `bash scripts/referencia.sh <link do YouTube>` baixa o vídeo, calcula o score (views ÷ inscritos), puxa a transcrição e monta folhas de quadros. O Claude analisa a estrutura e a edição e adapta ao seu design system, sem copiar.
+- **[Memória](guia/APRENDIZADOS.md):** regras aprendidas em dezenas de vídeos (motion no fim da fala, zoom sem mexer o rosto, círculo vermelho, cortes que não comem palavra, voz sem tratamento pesado) e o lugar onde entram as suas.
+- **Gravando com iPhone:** conversão do HDR sem lavar a pele ([`guia/GRAVACAO.md`](guia/GRAVACAO.md)).
+
 ## Novidades (outubro/2026)
 
 - **[Princípios de motion](guia/MOTIONS.md):** o texto na tela nunca repete a fala. Palavra vazia não vai pra tela, adjetivo vira prova (contador, gráfico, chip riscado), cada cena é um objeto em 3 a 5 passos com a câmera correndo e check no fim, ao lado do rosto só logo, número e inscrição, letterings só nas frases-chave do início, lower third no nome, painéis quando a explicação é um mecanismo prático, e a tela que a pessoa mostra fica sem motion.

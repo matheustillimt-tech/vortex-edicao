@@ -8,7 +8,7 @@ A skill fica melhor a cada edição. Depois de entregar um vídeo:
    - defeito técnico (ex.: "câmera aparece duas vezes");
    - componente novo (ex.: "cursor clicando num print").
 3. **Registre** antes de esquecer:
-   - na lista de aprendizados da skill (o que pediu, a regra e o estado ✅/⏳);
+   - no [`APRENDIZADOS.md`](APRENDIZADOS.md) (o que pediu, a regra e o estado ✅/⏳);
    - na memória, se for preferência da pessoa.
 4. **Corrija na fonte**, não só no vídeo:
    - regra vira código no modelo (`build.py`, `ilustra.py`, `gerar_sons.py`);

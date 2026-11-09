@@ -1,6 +1,6 @@
 # Princípios de motion
 
-Leia antes de planejar a LINHA DO TEMPO. **Estes princípios valem mais que qualquer tabela de "fala → motion"**: quando um gatilho da fala pedir texto na tela, confira aqui se ele passa.
+Leia antes de planejar a LINHA DO TEMPO, junto com o [`APRENDIZADOS.md`](APRENDIZADOS.md). **Estes princípios valem mais que qualquer tabela de "fala → motion"**: quando um gatilho da fala pedir texto na tela, confira aqui se ele passa.
 
 O erro que eles evitam: motion que repete a fala. Quando o texto que aparece é a mesma frase que a pessoa acabou de dizer, a edição fica rígida, ao pé da letra, e **parece feita por IA**. O motion tem que acrescentar alguma coisa que a fala sozinha não mostra.
 
@@ -41,7 +41,8 @@ Não escreva o adjetivo: mostre o que o comprova.
   - a câmera virtual corre pro lado a cada objeto novo e o anterior sai pela borda (`corre()`);
   - termina com um **check** no objeto principal (`selo()` + `check()`, com o som de "deu certo");
   - não é um card parado com duas linhas.
-- A cena entra **no fim do raciocínio**, dura 5 a 7 s (uma demonstração contínua pode durar mais) e monta em até 2 s.
+- A cena entra **no fim do raciocínio**, dura 5 a 7 s (uma demonstração contínua pode durar mais) e monta em até 1,2 s.
+- **Todo motion entra no FIM da fala** (`W("…", fim=True)`), nunca no começo da explicação: a pessoa fala, e quando termina o motion entra e já está montado. Nada de item entrando a cada palavra nem contador contando junto da fala (conta rápido depois). Depois de montado, algo sempre se mexe (boia, ponto correndo, push-in) até sair.
 - Entre duas cenas, **pelo menos 8 s de rosto** (`checa_ritmo()` avisa).
 - **Frase-ponte de texto puro** dura no máximo ~1 s: pequena, no centro, e passa direto pra um objeto.
 - **Família visual única:** fundo branco radial com vinheta cinza nos cantos; preto e um azul de destaque; verde só pra "ligado/ok", vermelho só pra erro/risco; emoji em ALGUNS momentos, de preferência dentro de um card de interface, nunca como enfeite solto.

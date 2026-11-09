@@ -12,7 +12,7 @@ A edição tem que prender (dopaminérgica) sem parecer brinquedo (clean). O cri
   - cor só na **logo real** e na **mídia real** (print, gravação). Vermelho só em "AO VIVO".
 - **Fonte:** Inter em tudo (título 52 px, número 124 px, texto 28–38 px em 1080p, pensando no celular).
 - **Destaque de palavra:** sublinhado reto que se desenha. Nada de rabisco, elipse à mão ou emoji.
-- **Número ou botão que aparece NA TELA:** zoom + `circulo()`, um traço limpo e geométrico, no lugar de card por cima.
+- **Número ou botão que aparece NA TELA:** zoom + `circulo()`, um traço limpo e geométrico **vermelho** (`#ef4444`; o branco some em cima da tela), no lugar de card por cima.
 - **Todo elemento tem saída animada** (`sai()`: fade + blur + leve escala). Nunca corte seco.
 
 ## Densidade
@@ -41,7 +41,8 @@ A edição tem que prender (dopaminérgica) sem parecer brinquedo (clean). O cri
 ## Cortes
 
 - **Repetiu ou errou: fica a ÚLTIMA tentativa.** Corte também falsos começos e o que ficou prolixo.
-- Respiros acima de ~0,3 s saem (`cortar.py`).
+- Respiros acima de ~0,3 s saem (`cortar.py`). Silêncio longo com só ruído de teclado ou mouse também sai.
+- **Nenhuma emenda come palavra:** o tempo da transcrição às vezes erra; a borda do corte vai até o silêncio real.
 - **A tela aparece inteira**, sem cortar palavras na borda. Zoom só em trecho, com a borda travada (o `zoom()` já trava).
 - Na tela + webcam: durante o zoom, a webcam original é tampada e a câmera volta por cima **sem zoom**, em janelinha com moldura. Card nunca invade a área da webcam.
 
@@ -52,6 +53,7 @@ A edição tem que prender (dopaminérgica) sem parecer brinquedo (clean). O cri
 - Proporção em relação à voz: whoosh ≈ +3 a +4 dB, clique ≈ −2 dB.
 - Trilha de fundo (`trilha.wav`) ~15 dB abaixo da voz.
 - Master final em −14 LUFS / −1 dBTP.
+- **Voz com tratamento leve** (passa-alta 70 Hz + volume nivelado). Cadeia pesada deixa a voz artificial.
 
 ## Armadilhas do HyperFrames (já resolvidas no modelo)
 
